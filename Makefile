@@ -44,11 +44,11 @@ ifndef WGET_INSTALLED
 endif
 endif
 	# creating the wordpress repo
-	@test -d $(APP_NAME) || (git -c advice.detachedHead=false clone --branch=$(WORDPRESS_VERSION) --single-branch https://github.com/WordPress/WordPress.git $(APP_NAME) && cd $(APP_NAME) && git checkout -qb master)
+	@test -d $(APP_NAME) || (git -c advice.detachedHead=false clone --branch=$(WORDPRESS_VERSION) --single-branch https://gitee.com/ktmud/WordPress.git $(APP_NAME) && cd $(APP_NAME) && git checkout -qb master)
 	# adding wp-config.php from gist
 	@test -f $(APP_NAME)/wp-config.php || (cp config/wp-config.php $(APP_NAME)/wp-config.php && cd $(APP_NAME) && git add wp-config.php && git commit -qm "Adding environment-variable based wp-config.php")
 	# adding .env file to configure buildpack
-	@test -f $(APP_NAME)/.buildpacks   || (echo "https://github.com/heroku/heroku-buildpack-php.git#$(BUILDPACK_VERSION)" > $(APP_NAME)/.buildpacks && cd $(APP_NAME) && git add .buildpacks && git commit -qm "Forcing php buildpack usage")
+	@test -f $(APP_NAME)/.buildpacks   || (echo "https://gitee.com/ktmud/heroku-buildpack-php.git#$(BUILDPACK_VERSION)" > $(APP_NAME)/.buildpacks && cd $(APP_NAME) && git add .buildpacks && git commit -qm "Forcing php buildpack usage")
 	# ensuring our composer.json loads with php 7.3 and loads the mysql extension
 	@test -f $(APP_NAME)/composer.json || (cp config/composer.json $(APP_NAME)/composer.json && cp config/composer.lock $(APP_NAME)/composer.lock && cd $(APP_NAME) && git add composer.json composer.lock && git commit -qm "Use PHP 7.3 and the mysql extension")
 	# setting the correct dokku remote for your app and server combination
